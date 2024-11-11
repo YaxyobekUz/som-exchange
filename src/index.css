@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap");
+
+:root {
+  --tg-theme-header-bg-color: red;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Base --- */
+
+@layer base {
+  ::-webkit-scrollbar {
+    @apply w-0 hidden;
+  }
+
+  body {
+    @apply bg-background font-poppins text-base text-dark-800 font-normal;
+  }
+}
+
+/* --- Components --- */
+@layer components {
+  .btn-primary {
+    @apply flex items-center justify-center h-12 w-full bg-primary rounded-lg text-white;
+  }
+
+  .navlink .active-fill {
+    @apply fill-dark-800 transition-colors duration-200;
+  }
+
+  .navlink .active-stroke {
+    @apply stroke-dark-800 transition-colors duration-200;
+  }
+
+  .navlink .active-rotate {
+    @apply rotate-0 transition-transform duration-200;
+  }
+
+  /* Active */
+  .navlink.active .active-fill {
+    @apply !fill-primary;
+  }
+
+  .navlink.active .active-stroke {
+    @apply !stroke-primary;
+  }
+
+  .navlink.active .active-rotate {
+    @apply rotate-180;
+  }
+
+  .navlink.active .active-text {
+    @apply text-primary;
+  }
+
+  .section {
+    @apply container pt-6 space-y-2.5;
+  }
+
+  .section-title {
+    @apply font-medium ml-3 xs:ml-4 xs:text-lg;
+  }
+}
+
+/* --- Utilities --- */
+
+@layer utilities {
+  .container {
+    @apply max-w-[480px] w-full px-4 mx-auto;
+  }
+}
+
+@keyframes animate-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+
+.animate-up {
+  animation: animate-up 500ms ease;
+}
