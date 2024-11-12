@@ -1,21 +1,23 @@
 import React from "react";
 
-// Components
-import Icon from "./Icon";
-
-// images
-import emptyDataImg from "../assets/images/others/empty-data.png";
+// Stickers
+import Lottie from "lottie-react";
+import emptyFolderSticker from "../assets/stickers/empty-folder.json";
 
 const EmptyData = ({ className = "" }) => {
   return (
     <div
       className={`flex flex-col items-center justify-center gap-3.5 ${className}`}
     >
-      <Icon src={emptyDataImg} alt="empty data" className="size-24" />
+      <Lottie
+        width={96}
+        className="size-20 xs:size-24"
+        animationData={emptyFolderSticker}
+      />
 
       {/* title */}
       <strong className="font-medium text-dark-800/70 text-sm xs:text-base">
-        Data not available
+        Ma'lumotlar mavjud emas
       </strong>
     </div>
   );
