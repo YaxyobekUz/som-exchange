@@ -21,6 +21,10 @@ import exchangeIcon from "../assets/images/icons/exchange.svg";
 import megaphoneImg from "../assets/images/others/megaphone.png";
 import tgPremiumBg from "../assets/images/backgrounds/telegram-premium.jpg";
 
+// Stickers
+import Lottie from "lottie-react";
+import duckSticker from "../assets/stickers/duck.json";
+
 const Home = () => {
   const { tg, user } = useTelegram();
 
@@ -46,14 +50,12 @@ const Home = () => {
     <>
       {/* Header */}
       <header className="bg-gradient-to-b from-primary to-primary/70 h-20 pb-3 xs:h-24">
-        <div className="flex items-center justify-between h-full !pl-0.5 container">
+        <div className="flex items-center justify-between h-full !pl-3 container">
           {/* Title */}
-          <div className="flex items-center gap-0.5 xs:gap-1.5">
-            <Icon
-              size={88}
-              alt="megaphone"
-              src={megaphoneImg}
-              className="size-20 xs:size-[88px]"
+          <div className="flex items-center gap-2.5">
+            <Lottie
+              animationData={duckSticker}
+              className="size-14 xs:size-16"
             />
 
             <b className="text-[17px] leading-normal text-white font-semibold xs:text-[19px]">
