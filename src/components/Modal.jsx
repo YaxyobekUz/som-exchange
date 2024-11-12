@@ -1,11 +1,14 @@
-// Images
-import { useDispatch, useSelector } from "react-redux";
-import Icon from "./Icon";
-import { closeModal } from "../store/features/modalSlice";
 import { useEffect, useRef } from "react";
 
+// Components
+import Icon from "./Icon";
+import GiveawayModalContent from "./GiveawayModalContent";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "../store/features/modalSlice";
+
 // Images
-import coinImg from "../assets/images/others/dollar.png";
 import crossIcon from "../assets/images/icons/cross.svg";
 
 const Modal = () => {
@@ -39,27 +42,35 @@ const Modal = () => {
       {/* Modal container */}
       <div
         ref={modalContainerRef}
-        className="relative w-full h-max bg-white p-4 rounded-t-xl animate-up"
+        className="relative w-full max-h-[calc(100vh-72px)] bg-white pb-4 rounded-t-xl animate-up xs:max-h-[calc(100vh-80px)]"
       >
-        {/* Close modal btn */}
-        <button
-          title="Close modal"
-          aria-label="Close modal"
-          onClick={handleCloseModal}
-          className="flex items-center justify-center absolute size-12 top-0 right-0"
-        >
-          <Icon src={crossIcon} alt="cross icon" />
-        </button>
+        {/* Modal header */}
+        <div className="py-4" role="heading">
+          {/* title */}
+          <h1 className="text-xl font-medium text-center">Aladin konkurs</h1>
+
+          {/* close modal btn */}
+          <button
+            title="Close modal"
+            aria-label="Close modal"
+            onClick={handleCloseModal}
+            className="flex items-center justify-center absolute size-12 top-1.5 right-1.5"
+          >
+            <Icon
+              size={28}
+              src={crossIcon}
+              alt="cross icon"
+              className="size-7"
+            />
+          </button>
+        </div>
 
         {/* Modal content */}
-        <div className="">
-          <div className="flex flex-col items-center justify-center gap-3.5">
-            <Icon src={coinImg} className="size-[88px]" alt="dollar coin" />
-
-            <h2 className="text-xl font-semibold">Top up the account</h2>
-
-            <p className="">salom</p>
-          </div>
+        <div
+          role="main"
+          className="container max-h-[calc(100vh-132px)] overflow-y-auto xs:max-h-[calc(100vh-140px)"
+        >
+          <GiveawayModalContent />
         </div>
       </div>
     </div>
