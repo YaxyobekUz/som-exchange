@@ -3,19 +3,16 @@ import React from "react";
 // Components
 import Icon from "./Icon";
 
+// Telegram
+import useTelegram from "../hooks/useTelegram";
+
 // Images
 import giftIcon from "../assets/images/icons/gift.svg";
 
-// Data
-const giveaway = {
-  name: "Aladin konkurs",
-  amount: { type: "money", value: 100000 },
-  image: "https://imgtools.algoblend.in/assets/img/about.jpg",
-  channels: [{ id: 0, name: "Foydali uz", username: "mryaxyobek" }],
-};
+const GiveawayModalContent = ({ data }) => {
+  const giveaway = data;
+  const { openTelegramLink } = useTelegram();
 
-const GiveawayModalContent = () => {
-  const imageUrl = "https://imgtools.algoblend.in/assets/img/about.jpg";
   return (
     <>
       <div className="overflow-y-auto max-h-[calc(100vh-212px)] space-y-4 xs:max-h-[calc(100vh-220px)]">
@@ -24,8 +21,8 @@ const GiveawayModalContent = () => {
           <img
             width={448}
             height={240}
-            src={imageUrl}
-            alt="giveaway image"
+            alt="Giveaway banner"
+            src={giveaway.image.banner}
             className="w-full h-52 bg-dark-800/10 object-cover rounded-lg xs:h-60 xs:rounded-xl"
           />
 
@@ -54,14 +51,14 @@ const GiveawayModalContent = () => {
         </p>
 
         {/* Channels */}
-        <ul className="">
+        <ul>
           {giveaway.channels.map((channel, index) => (
             <li key={index} className="flex items-center gap-3.5 group h-20">
               {/* Icon */}
               <Icon
                 size={48}
-                alt="channel image"
-                src={giveaway.image}
+                alt="Channel icon"
+                src={giveaway.image.icon}
                 className="flex items-center justify-center size-[50px] shrink-0 bg-dark-800/10 rounded-full xs:size-14"
               />
 
@@ -70,12 +67,12 @@ const GiveawayModalContent = () => {
                 <h3 className="font-medium line-clamp-2">{channel.name}</h3>
 
                 {/* channel url */}
-                <a
-                  href={`https://t.me/${channel.username}`}
+                <button
+                  onClick={() => openTelegramLink(channel.username)}
                   className="flex items-center justify-center z-10 shrink-0 w-[88px] bg-background rounded-full py-1.5 font-medium text-sm"
                 >
                   Qo'shilish
-                </a>
+                </button>
               </div>
             </li>
           ))}

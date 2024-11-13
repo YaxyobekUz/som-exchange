@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 // Components
 import Icon from "./Icon";
+import EmptyData from "./EmptyData";
 import GiveawayModalContent from "./GiveawayModalContent";
 
 // Redux
@@ -14,11 +15,8 @@ import crossIcon from "../assets/images/icons/cross.svg";
 const Modal = () => {
   const dispatch = useDispatch();
   const modalContainerRef = useRef();
-  const { modal } = useSelector((state) => state.modal);
-
-  const handleCloseModal = () => {
-    dispatch(closeModal());
-  };
+  const handleCloseModal = () => dispatch(closeModal());
+  const { title, name, data } = useSelector((state) => state.modal);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -37,8 +35,23 @@ const Modal = () => {
     };
   }, [modalContainerRef, handleCloseModal]);
 
+  const renderContent = () => {
+    switch (name?.toLowerCase()) {
+      case "giveaway":
+        return <GiveawayModalContent data={data} />;
+        break;
+
+      default:
+        return <EmptyData />;
+        break;
+    }
+  };
+
   return (
-    <div className="flex items-end fixed inset-0 z-40 size-full bg-black/70">
+    <div
+      rel="modal"
+      className="flex items-end fixed inset-0 z-40 size-full bg-black/70"
+    >
       {/* Modal container */}
       <div
         ref={modalContainerRef}
@@ -47,7 +60,7 @@ const Modal = () => {
         {/* Modal header */}
         <div className="py-4" role="heading">
           {/* title */}
-          <h1 className="text-xl font-medium text-center">Aladin konkurs</h1>
+          <h1 className="text-xl font-medium text-center">{title}</h1>
 
           {/* close modal btn */}
           <button
@@ -68,9 +81,9 @@ const Modal = () => {
         {/* Modal content */}
         <div
           role="main"
-          className="container max-h-[calc(100vh-132px)] overflow-y-auto xs:max-h-[calc(100vh-140px)"
+          className="container max-h-[calc(100vh-132px)] xs:max-h-[calc(100vh-140px)"
         >
-          <GiveawayModalContent />
+          {renderContent()}
         </div>
       </div>
     </div>
