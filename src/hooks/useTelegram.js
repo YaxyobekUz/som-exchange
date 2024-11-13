@@ -11,7 +11,11 @@ export default () => {
     tg.ready();
   }, []);
 
+  const openTelegramLink = (url) => {
+    tg.openTelegramLink(`https://t.me/${url}`);
+  };
+
   const user = tg.initDataUnsafe?.user;
 
-  return { onClose, user, tg };
+  return { onClose, user, tg, openTelegramLink };
 };
