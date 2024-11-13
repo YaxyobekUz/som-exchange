@@ -14,6 +14,7 @@ import Tasks from "./pages/Tasks";
 import Page404 from "./pages/Page404";
 import Premium from "./pages/Premium";
 import Profile from "./pages/Profile";
+import Exchange from "./pages/Exchange";
 
 // Layouts
 import MainLayout from "./layouts/MainLayout";
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="tasks" element={<Tasks />} />
         <Route path="premium" element={<Premium />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="exchange" element={<Exchange/>} />
       </Route>
     )
   );
