@@ -126,12 +126,12 @@ const Exchange = () => {
           <li className="group">
             <label
               onClick={() => setPaymentMethod("card")}
-              className="flex items-center gap-3.5 h-20 pl-4 w-full bg-white rounded-2xl xs:h-24"
+              className="flex items-center gap-3.5 w-full h-20 pl-4 bg-white rounded-2xl xs:h-24"
             >
               {/* image */}
               <div
                 role="icon"
-                className="flex items-center justify-center size-[50px] rounded-full bg-gradient-to-b from-lightAccent to-primary xs:size-14"
+                className="flex items-center justify-center shrink-0 size-[50px] rounded-full bg-gradient-to-b from-lightAccent to-primary xs:size-14"
               >
                 <Icon
                   size={28}
@@ -156,16 +156,16 @@ const Exchange = () => {
                     name="Card Number"
                     placeholder="0000 0000 0000 0000"
                     onChange={(e) => setCardNumber(e.target.value)}
-                    className="text-primary text-[15px] leading-5 outline-none xs:text-base"
+                    className="w-full !min-w-0 text-primary text-[15px] leading-5 outline-none xs:text-base"
                   />
                 </div>
 
                 <button
                   className={`${
                     paymentMethod === "card" ? "opacity-100" : "opacity-10"
-                  } flex items-center justify-center z-10 shrink-0 size-7 bg-primary rounded-full py-1.5 font-medium text-sm transition-opacity duration-300`}
+                  } flex items-center justify-center z-10 shrink-0 size-5 bg-primary rounded-full py-1.5 font-medium text-sm transition-opacity duration-300 xs:size-7`}
                 >
-                  <span className="size-4 bg-white rounded-full"></span>
+                  <span className="size-2.5 bg-white rounded-full xs:size-4"></span>
                 </button>
               </div>
             </label>
@@ -202,9 +202,9 @@ const Exchange = () => {
               <button
                 className={`${
                   paymentMethod === "account" ? "opacity-100" : "opacity-10"
-                } flex items-center justify-center z-10 shrink-0 size-7 opacity-10 bg-primary rounded-full py-1.5 font-medium text-sm transition-opacity duration-300`}
+                } flex items-center justify-center z-10 shrink-0 size-5 opacity-10 bg-primary rounded-full py-1.5 font-medium text-sm transition-opacity duration-300 xs:size-7`}
               >
-                <span className="size-4 bg-white rounded-full"></span>
+                <span className="size-2.5 bg-white rounded-full xs:size-4"></span>
               </button>
             </div>
           </li>
