@@ -1,0 +1,10 @@
+{
+  "name": "So'mga almashish",
+  "description": "Hamyoningiz aktivlarini kuzatib borish uchun TON hamyoningizni ulab oling.",
+  "url": "https://som-exchange.netlify.app",
+  "iconUrl": "https://som-exchange.netlify.app/public/images/exchange.jpg",
+  "bridge": {
+    "type": "wallet-bridge",
+    "url": "https://bridge.ton.org"
+  }
+}
