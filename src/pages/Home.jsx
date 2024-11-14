@@ -108,8 +108,8 @@ const Home = () => {
               <Icon
                 size={28}
                 src={settingsIcon}
-                className="size-7"
                 alt="settings icon"
+                className="size-6 xs:size-7"
               />
             </Link>
           </div>
