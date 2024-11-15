@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 // Components
 import Icon from "./Icon";
 import EmptyData from "./EmptyData";
+import TokensModalContent from "./TokensModalContent";
 import GiveawayModalContent from "./GiveawayModalContent";
 
 // Redux
@@ -15,7 +16,7 @@ import crossIcon from "../assets/images/icons/cross.svg";
 const Modal = () => {
   const dispatch = useDispatch();
   const modalContainerRef = useRef();
-  const handleCloseModal = () => dispatch(closeModal());
+  const handleCloseModal = (extra) => dispatch(closeModal(extra));
   const { title, name, data } = useSelector((state) => state.modal);
 
   useEffect(() => {
@@ -36,15 +37,12 @@ const Modal = () => {
   }, [modalContainerRef, handleCloseModal]);
 
   const renderContent = () => {
-    switch (name?.toLowerCase()) {
-      case "giveaway":
-        return <GiveawayModalContent data={data} />;
-        break;
+    const components = {
+      giveaway: <GiveawayModalContent data={data} />,
+      tokens: <TokensModalContent closeModal={handleCloseModal} />,
+    };
 
-      default:
-        return <EmptyData />;
-        break;
-    }
+    return components[name?.toLowerCase()] || <EmptyData />;
   };
 
   return (

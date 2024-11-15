@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
+// Data
+import tokens from "../data/tokens";
+import profit from "../data/profit";
+
 // Components
 import Icon from "../components/Icon";
 
 // Telegram
 import useTelegram from "../hooks/useTelegram";
 
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../store/features/modalSlice";
+
 // Images
 import userIcon from "../assets/images/icons/user.svg";
-import tonIcon from "../assets/images/icons/toncoin.svg";
 import statsIcon from "../assets/images/icons/stats.svg";
 import walletIcon from "../assets/images/icons/wallet.svg";
 import historyIcon from "../assets/images/icons/history.svg";
@@ -19,12 +26,84 @@ import solidDownArrowIcon from "../assets/images/icons/solid-down-arrow.svg";
 
 const Exchange = () => {
   const { tg } = useTelegram();
+  const dispatch = useDispatch();
   useEffect(() => tg.setHeaderColor("#fff"), []);
   const [somAmount, setSomAmount] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [cryptoCoinAmount, setCryptoCoinAmount] = useState("");
+  const { selectedTokenName } = useSelector((state) => state.modal.extraData);
+  const tokenIndex = tokens.findIndex((t) => t.name === selectedTokenName);
+  const currentToken = tokens[tokenIndex] || tokens[0];
+
+  // Update amount
+  useEffect(() => {
+    if (selectedTokenName) {
+      setSomAmount("");
+      setCryptoCoinAmount("");
+    }
+  }, [selectedTokenName]);
+
+  const handleCryptoCoinAmountChange = (e) => {
+    const enteredAmount = parseFloat(e.target.value);
+    setCryptoCoinAmount(e.target.value);
+
+    if (isNaN(enteredAmount)) {
+      setSomAmount("");
+      return;
+    }
+
+    const tokenUnitPrice = currentToken.price;
+    const totalTokenPrice = tokenUnitPrice * enteredAmount;
+
+    const profitPercentage =
+      profit.prices.find(
+        ({ from, to }) => from < totalTokenPrice && to >= totalTokenPrice
+      )?.percentage || 0;
+
+    const profitAmount = (totalTokenPrice * profitPercentage) / 100;
+    setSomAmount(totalTokenPrice - profitAmount);
+  };
+
+  const handleSomAmountChange = (e) => {
+    const enteredSomAmount = parseFloat(e.target.value);
+    setSomAmount(e.target.value);
+
+    if (isNaN(enteredSomAmount)) {
+      setCryptoCoinAmount("");
+      return;
+    }
+
+    const tokenUnitPrice = currentToken.price; // Token price 1 TON = 63,000 uzs
+
+    let profitPercentage = 0;
+    let grossCryptoAmount = enteredSomAmount; // Initial value
+
+    for (let i = 0; i < profit.prices.length; i++) {
+      const { from, to, percentage } = profit.prices[i];
+      const tempGrossCryptoAmount = enteredSomAmount / (1 - percentage / 100);
+
+      if (tempGrossCryptoAmount >= from && tempGrossCryptoAmount <= to) {
+        grossCryptoAmount = tempGrossCryptoAmount;
+        profitPercentage = percentage;
+        break;
+      }
+    }
+
+    const netCryptoAmount = grossCryptoAmount / tokenUnitPrice;
+    setCryptoCoinAmount(netCryptoAmount.toFixed(2));
+  };
+
+  // Open modal
+  const openTokensModal = () => {
+    dispatch(
+      openModal({
+        name: "Tokens",
+        title: "Tokenlar",
+      })
+    );
+  };
 
   return (
     <div className="pt-6 pb-20">
@@ -77,22 +156,22 @@ const Exchange = () => {
         {/* Section content */}
         <div className="relative w-full bg-white rounded-2xl space-y-0.5 p-4">
           <div className="flex items-center gap-4 xs:gap-10">
-            <button className="flex items-center shrink-0">
+            <button
+              onClick={openTokensModal}
+              className="flex items-center shrink-0"
+            >
               {/* Coin icon */}
-              <span
-                role="icon"
-                className="flex items-center justify-center shrink-0 size-[50px] mr-3.5 rounded-full bg-primary xs:size-14"
-              >
-                <Icon
-                  size={28}
-                  src={tonIcon}
-                  alt="Ton coin icon"
-                  className="size-6 xs:size-7"
-                />
-              </span>
+              <Icon
+                size={28}
+                src={currentToken.icon}
+                alt={`${currentToken.name} coin icon`}
+                className="shrink-0 size-[50px] mr-3.5 rounded-full bg-dark-800/10 xs:size-14"
+              />
 
               {/* Coin name */}
-              <span className="font-medium text-lg mr-2.5 xs:text-xl">TON</span>
+              <span className="font-medium text-lg mr-2.5 uppercase xs:text-xl">
+                {currentToken.name}
+              </span>
 
               {/* Arrow icon */}
               <Icon
@@ -115,12 +194,12 @@ const Exchange = () => {
               {/* Input */}
               <input
                 type="text"
-                maxLength={12}
+                maxLength={20}
                 placeholder="0.0"
                 autoComplete="off"
                 value={cryptoCoinAmount}
                 id="crypto-coin-amount-input"
-                onChange={(e) => setCryptoCoinAmount(e.target.value)}
+                onChange={handleCryptoCoinAmountChange}
                 className="w-full min-w-0 text-right outline-none xs:text-lg"
               />
             </div>
@@ -138,7 +217,7 @@ const Exchange = () => {
         </div>
       </section>
 
-      {/* Recive */}
+      {/* Receive */}
       <section className="section">
         {/* Section title */}
         <h2 className="section-title">Qabul qilasiz</h2>
@@ -171,12 +250,12 @@ const Exchange = () => {
               {/* Input */}
               <input
                 type="text"
-                maxLength={12}
+                maxLength={20}
                 placeholder="0.0"
                 value={somAmount}
                 autoComplete="off"
                 id="som-amount-input"
-                onChange={(e) => setSomAmount(e.target.value)}
+                onChange={handleSomAmountChange}
                 className="w-full min-w-0 text-right outline-none xs:text-lg"
               />
             </div>
