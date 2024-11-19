@@ -60,7 +60,7 @@
   }
 
   .section-title {
-    @apply font-medium ml-3 xs:ml-4 xs:text-lg;
+    @apply ml-3 xs:ml-4 xs:text-lg;
   }
 }
 

@@ -14,6 +14,7 @@ import Tasks from "./pages/Tasks";
 import Page404 from "./pages/Page404";
 import Premium from "./pages/Premium";
 import Profile from "./pages/Profile";
+import Friends from "./pages/Friends";
 import Exchange from "./pages/Exchange";
 
 // Layouts
@@ -26,9 +27,10 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="*" element={<Page404 />} />
         <Route path="tasks" element={<Tasks />} />
+        <Route path="friends" element={<Friends />} />
         <Route path="premium" element={<Premium />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="exchange" element={<Exchange/>} />
+        <Route path="exchange" element={<Exchange />} />
       </Route>
     )
   );
