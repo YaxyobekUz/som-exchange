@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // Utils
-import { getFirstLetter } from "../utils";
+import { getFirstLetter, getRandomGradientColor } from "../utils";
 
 // Components
 import Icon from "../components/Icon";
@@ -18,7 +18,6 @@ import tasksIcon from "../assets/images/icons/tasks.svg";
 import tonIcon from "../assets/images/icons/toncoin.svg";
 import settingsIcon from "../assets/images/icons/settings.svg";
 import exchangeIcon from "../assets/images/icons/exchange.svg";
-import megaphoneImg from "../assets/images/others/megaphone.png";
 import tgPremiumBg from "../assets/images/backgrounds/telegram-premium.jpg";
 
 // Stickers
@@ -80,7 +79,10 @@ const Home = () => {
           <div className="flex items-center justify-between gap-3.5">
             <div className="flex items-center gap-5 grow">
               {/* profile image */}
-              <div className="flex items-center justify-center size-14 shrink-0 bg-gradient-orange rounded-full text-xl font-medium text-white">
+              <div
+                style={{ background: getRandomGradientColor() }}
+                className="flex items-center justify-center size-14 shrink-0 rounded-full text-xl font-medium text-white"
+              >
                 {getFirstLetter(user?.first_name) || "F"}
               </div>
 
