@@ -29,7 +29,7 @@ const Navbar = () => {
               />
             </svg>
             {/* link name */}
-            <h3 className="active-text text-xs font-medium">Uy</h3>
+            <h3 className="active-text text-xs font-medium">Asosiy</h3>
           </NavLink>
         </li>
 
