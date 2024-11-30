@@ -80,9 +80,9 @@ const App = () => {
       <Animate
         transition="opacity 300ms ease"
         keyframes={smoothClosingAnimationData}
-        className="flex items-center justify-center absolute inset-0 z-50 w-screen h-screen bg-background transition-opacity"
+        className="flex items-center justify-center fixed inset-0 z-50 w-screen h-screen bg-background transition-opacity"
       >
-        <Lottie animationData={loaderSticker} className="size-12 xs:size-14" />
+        <Lottie animationData={loaderSticker} className="size-14" />
       </Animate>
     </div>
   );
